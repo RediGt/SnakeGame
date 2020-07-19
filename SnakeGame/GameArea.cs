@@ -65,22 +65,34 @@ namespace SnakeGame
             if (e.KeyCode == Keys.W || e.KeyCode == Keys.Up)
             {
                 snake.VerVelocity = -snake.Step;
-                snake.HorVelocity = 0;
+                snake.HorVelocity = 0;               
+                snake.HeadAnimate(RotateFlipType.Rotate180FlipNone);
+                snake.TailAnimate(RotateFlipType.RotateNoneFlipNone);
+                snake.BodyAnimate(RotateFlipType.RotateNoneFlipNone);
             }
             else if (e.KeyCode == Keys.S || e.KeyCode == Keys.Down)
             {
                 snake.VerVelocity = snake.Step;
                 snake.HorVelocity = 0;
+                snake.HeadAnimate(RotateFlipType.RotateNoneFlipNone);
+                snake.TailAnimate(RotateFlipType.Rotate180FlipNone);
+                snake.BodyAnimate(RotateFlipType.RotateNoneFlipNone);
             }
             else if (e.KeyCode == Keys.A || e.KeyCode == Keys.Left)
             {
                 snake.HorVelocity = -snake.Step;
                 snake.VerVelocity = 0;
+                snake.HeadAnimate(RotateFlipType.Rotate90FlipNone);
+                snake.TailAnimate(RotateFlipType.Rotate270FlipNone);
+                snake.BodyAnimate(RotateFlipType.Rotate90FlipNone);
             }
             else if (e.KeyCode == Keys.D || e.KeyCode == Keys.Right)
             {
                 snake.HorVelocity = snake.Step;
                 snake.VerVelocity = 0;
+                snake.HeadAnimate(RotateFlipType.Rotate270FlipNone);
+                snake.TailAnimate(RotateFlipType.Rotate90FlipNone);
+                snake.BodyAnimate(RotateFlipType.Rotate90FlipNone);
             }
         }
 
@@ -88,6 +100,7 @@ namespace SnakeGame
         {
             mainTimer.Stop();
             lblGameOver.Visible = true;
+            lblGameOver.BringToFront();
         }
 
         private void SetFoodLocation()

@@ -29,7 +29,10 @@ namespace SnakeGame
             this.AddPixel(initPositionTop, initPositionLeft);
             this.AddPixel(initPositionTop, initPositionLeft + jointSize);
             this.AddPixel(initPositionTop, initPositionLeft + jointSize * 2);
-            snakePixels[0].BackColor = Color.White;
+
+            this.HeadAnimate(RotateFlipType.Rotate180FlipNone);
+            this.BodyAnimate(RotateFlipType.RotateNoneFlipNone);
+            this.TailAnimate(RotateFlipType.RotateNoneFlipNone);
         }
 
         public void AddPixel(int left, int top)
@@ -111,7 +114,60 @@ namespace SnakeGame
                 return true;
             else
                 return false;
-        }*/
+        }*/ 
+        
+        public void HeadAnimate(RotateFlipType type)
+        {
+            snakePixels[0].BackColor = Color.RosyBrown;
+            
+            Bitmap initPicture = new Bitmap(Properties.Resources.Snake_sprite_sheet);
+            RectangleF cloneRect = new RectangleF(1, 43, 40, 40);
+            System.Drawing.Imaging.PixelFormat format = initPicture.PixelFormat;
+            Bitmap head1 = initPicture.Clone(cloneRect, format);
+            head1.RotateFlip(type);
+            snakePixels[0].Image = head1;
+            snakePixels[0].SizeMode = PictureBoxSizeMode.StretchImage;            
+        }
+
+        public void TailAnimate(RotateFlipType type)
+        {
+            snakePixels[snakePixels.Count-1].BackColor = Color.RosyBrown;
+
+            Bitmap initPicture = new Bitmap(Properties.Resources.Snake_sprite_sheet);
+            RectangleF cloneRect = new RectangleF(43, 85, 40, 40);
+            System.Drawing.Imaging.PixelFormat format = initPicture.PixelFormat;
+            Bitmap tail = initPicture.Clone(cloneRect, format);
+            tail.RotateFlip(type);
+            snakePixels[snakePixels.Count - 1].Image = tail;
+            snakePixels[snakePixels.Count - 1].SizeMode = PictureBoxSizeMode.StretchImage;
+        }
+
+        public void BodyAnimate(RotateFlipType type)
+        {
+            for (int i = 1; i < snakePixels.Count-1; i++)
+            {
+                snakePixels[i].BackColor = Color.RosyBrown;
+
+                Bitmap initPicture = new Bitmap(Properties.Resources.Snake_sprite_sheet);
+                RectangleF cloneRect = new RectangleF(85, 85, 40, 40);
+                System.Drawing.Imaging.PixelFormat format = initPicture.PixelFormat;
+                Bitmap body = initPicture.Clone(cloneRect, format);
+                body.RotateFlip(type);
+                snakePixels[i].Image = body;
+                snakePixels[i].SizeMode = PictureBoxSizeMode.StretchImage;
+            }            
+        }
+
+        public void TurnAnimate(RotateFlipType type, int bodyPart)
+        {
+            Bitmap initPicture = new Bitmap(Properties.Resources.Snake_sprite_sheet);
+            RectangleF cloneRect = new RectangleF(43, 1, 40, 40);
+            System.Drawing.Imaging.PixelFormat format = initPicture.PixelFormat;
+            Bitmap turningPart = initPicture.Clone(cloneRect, format);
+            turningPart.RotateFlip(type);
+            snakePixels[bodyPart].Image = turningPart;
+            snakePixels[bodyPart].SizeMode = PictureBoxSizeMode.StretchImage;
+        }
     }
 }
 
