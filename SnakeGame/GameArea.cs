@@ -11,11 +11,7 @@ using System.Windows.Forms;
 namespace SnakeGame
 {
     public partial class GameArea : Form
-    {
-        int horVelocity = 0;
-        int verVelocity = 0;
-        int step = 20;
-
+    {        
         Area area = new Area();
         Snake snake = new Snake();
         Timer mainTimer = new Timer();
@@ -25,21 +21,6 @@ namespace SnakeGame
             InitializeComponent();
             InitializeGame();
             InitializeTimer();
-        }
-
-        private void InitializeTimer()
-        {
-            mainTimer.Interval = 500;
-            mainTimer.Tick += new EventHandler(MainTimer_Tick);
-            mainTimer.Start();
-        }
-
-        private void MainTimer_Tick(object sender, EventArgs e)
-        {
-            snake.invalidMove(horVelocity, verVelocity, mainTimer);
-            snake.SnakeMove(horVelocity, verVelocity);
-            snake.BorderCollision(area, mainTimer);
-            snake.Render(this);
         }
 
         private void InitializeGame()
@@ -55,28 +36,51 @@ namespace SnakeGame
             snake.Render(this);
         }
 
+        private void InitializeTimer()
+        {
+            mainTimer.Interval = 500;
+            mainTimer.Tick += new EventHandler(MainTimer_Tick);
+            mainTimer.Start();
+        }
+
+        private void MainTimer_Tick(object sender, EventArgs e)
+        {
+            if(snake.invalidMove())
+                GameOver();
+            snake.SnakeMove();
+            if(snake.BorderCollision(area))
+                GameOver();
+            snake.Render(this);
+        }       
+
         private void Game_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.KeyCode == Keys.W)
+            if (e.KeyCode == Keys.W || e.KeyCode == Keys.Up)
             {
-                verVelocity = -step;
-                horVelocity = 0;
+                snake.VerVelocity = -snake.Step;
+                snake.HorVelocity = 0;
             }
-            else if (e.KeyCode == Keys.S)
+            else if (e.KeyCode == Keys.S || e.KeyCode == Keys.Down)
             {
-                verVelocity = step;
-                horVelocity = 0;
+                snake.VerVelocity = snake.Step;
+                snake.HorVelocity = 0;
             }
-            else if (e.KeyCode == Keys.A)
+            else if (e.KeyCode == Keys.A || e.KeyCode == Keys.Left)
             {
-                horVelocity = -step;
-                verVelocity = 0;
+                snake.HorVelocity = -snake.Step;
+                snake.VerVelocity = 0;
             }
-            else if (e.KeyCode == Keys.D)
+            else if (e.KeyCode == Keys.D || e.KeyCode == Keys.Right)
             {
-                horVelocity = step;
-                verVelocity = 0;
+                snake.HorVelocity = snake.Step;
+                snake.VerVelocity = 0;
             }
+        }
+
+        private void GameOver()
+        {
+            mainTimer.Stop();
+            lblGameOver.Visible = true;
         }
     }
 }

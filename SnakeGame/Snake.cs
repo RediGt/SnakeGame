@@ -20,6 +20,10 @@ namespace SnakeGame
             InitializeSnake();
         }
 
+        public int HorVelocity { get; set; } = 0;
+        public int VerVelocity { get; set; } = 0;
+        public int Step { get; set; } = 20;
+
         private void InitializeSnake()
         {
             this.AddPixel(initPositionTop, initPositionLeft);
@@ -48,20 +52,21 @@ namespace SnakeGame
                 sp.BringToFront();
             }
         }
-        public void SnakeMove(int X, int Y)
+
+        public void SnakeMove()
         {
-            if (snakePixels.Count > 1 && (X != 0 || Y != 0))
+            if (snakePixels.Count > 1 && (HorVelocity != 0 || VerVelocity != 0))
             {
                 for (int i = snakePixels.Count - 1; i > 0; i--)
                 {
                     snakePixels[i].Location = snakePixels[i - 1].Location;
                 }
             }
-            snakePixels[0].Left += X;
-            snakePixels[0].Top += Y;
+            snakePixels[0].Left += HorVelocity;
+            snakePixels[0].Top += VerVelocity;
         }
 
-        public void BorderCollision(Area area, Timer timer)
+        public bool BorderCollision(Area area)
         {
             if (snakePixels[0].Location.X < area.Left ||
                 snakePixels[0].Location.X > area.Width ||
@@ -69,21 +74,33 @@ namespace SnakeGame
                 snakePixels[0].Location.Y > area.Height)
             {
                 snakePixels[0].BackColor = Color.Red;
-                timer.Stop();
-                MessageBox.Show("Collision");
+                return true;
             }
+            return false;
         }
 
-        public void invalidMove(int X, int Y, Timer timer)
+        public bool invalidMove()
         {
-            if (snakePixels[0].Left + X == snakePixels[1].Left &&
-                snakePixels[0].Top + Y == snakePixels[1].Top)
+            if (snakePixels[0].Left + HorVelocity == snakePixels[1].Left &&
+                snakePixels[0].Top + VerVelocity == snakePixels[1].Top)
             {
                 snakePixels[0].BackColor = Color.Red;
-                timer.Stop();
-                MessageBox.Show("I ate myself");
+                return true;
             }
+            return false;
         }
+
+        /*public void invalidMove(Timer timer)
+        {
+            if (snakePixels[0].Left + HorVelocity == snakePixels[1].Left &&
+                snakePixels[0].Top + VerVelocity == snakePixels[1].Top)
+            {
+                snakePixels[0].BackColor = Color.Red;
+
+                //timer.Stop();
+                // MessageBox.Show("I ate myself");
+            }
+        }*/
 
         /*
         public bool invalidMove2(int X, int Y)
