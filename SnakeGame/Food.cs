@@ -20,11 +20,11 @@ namespace SnakeGame
         {
             this.Width = 20;
             this.Height = 20;
-            this.BackColor = Color.DarkOrange;
+            this.BackColor = Color.Blue;
         }
         public void GetFoodLocation()
         {
-            this.Location = new Point(100 + 20 * rand.Next(0, 20), 100 + 20 * rand.Next(0, 20));
+            this.Location = new Point(20 + 20 * rand.Next(0, 29), 20 + 20 * rand.Next(0, 29));
         }
 
     }
