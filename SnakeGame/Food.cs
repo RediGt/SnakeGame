@@ -33,11 +33,15 @@ namespace SnakeGame
             
         }*/
 
+        
         private void InitializeFood()
         {
             this.Width = 20;
             this.Height = 20;
-            this.BackColor = Color.DarkOrange;
+            this.Image = Properties.Resources.Pear;
+            this.BackColor = Color.RosyBrown;
+            this.SizeMode = PictureBoxSizeMode.StretchImage;
+
         }
 
         public void GetFoodLocation()

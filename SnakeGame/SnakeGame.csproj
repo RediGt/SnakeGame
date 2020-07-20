@@ -91,18 +91,6 @@
     <None Include="Resources\Snake sprite sheet.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\Head_Down_01.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Head_Left_01.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Head_Right_01.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Head_Up_01.png" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="Resources\Apple.png" />
   </ItemGroup>
   <ItemGroup>

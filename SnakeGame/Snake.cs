@@ -13,7 +13,7 @@ namespace SnakeGame
         public List<PictureBox> snakePixels = new List<PictureBox>();
         int initPositionTop = 200;
         int initPositionLeft = 200;
-        int jointSize = 20;
+        int jointSize = 20;      
 
         public Snake()
         {
@@ -24,6 +24,10 @@ namespace SnakeGame
         public int VerVelocity { get; set; } = 0;
         public int Step { get; set; } = 20;
 
+        public string MovementDirection { get; set; } = "Up";
+
+        public Point headPosition { get; set; }
+
         private void InitializeSnake()
         {
             this.AddPixel(initPositionTop, initPositionLeft);
@@ -33,6 +37,8 @@ namespace SnakeGame
             this.HeadAnimate(RotateFlipType.Rotate180FlipNone);
             this.BodyAnimate(RotateFlipType.RotateNoneFlipNone);
             this.TailAnimate(RotateFlipType.RotateNoneFlipNone);
+
+            this.headPosition = this.snakePixels[0].Location;
         }
 
         public void AddPixel(int left, int top)
@@ -41,7 +47,7 @@ namespace SnakeGame
             pixel = new PictureBox();
             pixel.Height = jointSize;
             pixel.Width = jointSize;
-            pixel.BackColor = Color.SlateGray;
+            pixel.BackColor = Color.RosyBrown;
             pixel.Location = new Point(left, top);
 
             snakePixels.Add(pixel);
@@ -157,8 +163,8 @@ namespace SnakeGame
                 snakePixels[i].SizeMode = PictureBoxSizeMode.StretchImage;
             }            
         }
-
-        public void TurnAnimate(RotateFlipType type, int bodyPart)
+        /*
+        public void TurnAnimate(RotateFlipType type) //, int bodyPart
         {
             Bitmap initPicture = new Bitmap(Properties.Resources.Snake_sprite_sheet);
             RectangleF cloneRect = new RectangleF(43, 1, 40, 40);
@@ -167,7 +173,7 @@ namespace SnakeGame
             turningPart.RotateFlip(type);
             snakePixels[bodyPart].Image = turningPart;
             snakePixels[bodyPart].SizeMode = PictureBoxSizeMode.StretchImage;
-        }
+        }  */     
     }
 }
 
