@@ -205,7 +205,7 @@ namespace SnakeGame
                 snakePixels[i].SizeMode = PictureBoxSizeMode.StretchImage;                
             }            
         }
-        
+         
         public void TurnAnimate()
         {
             for (int i = 1; i < snakePixels.Count - 1; i++)
