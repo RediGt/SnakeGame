@@ -15,10 +15,7 @@ namespace SnakeGame
         Area area = new Area();
         Snake snake = new Snake();
         Timer mainTimer = new Timer();
-        Food food = new Food();
-        RotateFlipType headType;
-        RotateFlipType bodyType;
-        RotateFlipType tailType;
+        Food food = new Food();       
         private int score;
 
         public GameArea()
@@ -60,10 +57,11 @@ namespace SnakeGame
             SnakeFoodCollision();
             if(snake.BorderCollision(area))
                 GameOver();
-            snake.HeadAnimate(headType);
-            snake.TailAnimate(tailType);
-            snake.BodyAnimate(bodyType);
+            snake.HeadAnimate(snake.headRotateType);
+            snake.TailAnimate();
+            snake.BodyAnimate(snake.bodyRotateType);
             snake.Render(this);
+            snake.turningJointsShifting();
         }       
 
         private void Game_KeyDown(object sender, KeyEventArgs e)
@@ -72,45 +70,70 @@ namespace SnakeGame
             {
                 snake.VerVelocity = -snake.Step;
                 snake.HorVelocity = 0;                
-                headType = RotateFlipType.Rotate180FlipNone;
-                tailType = RotateFlipType.RotateNoneFlipNone;
-                bodyType = RotateFlipType.RotateNoneFlipNone;
-                /*if (snake.MovementDirection == "Right")
+                snake.headRotateType = RotateFlipType.Rotate180FlipNone;
+                //snake.tailRotateType = RotateFlipType.RotateNoneFlipNone;
+                snake.bodyRotateType = RotateFlipType.RotateNoneFlipNone;
+                if (snake.MovementDirection == "Right")
                 {
-                    snake.TurnAnimate(RotateFlipType.Rotate180FlipNone);
+                    snake.turningJoints[1] = "RightUp";
+                }
+                if (snake.MovementDirection == "Left")
+                {                    
+                    snake.turningJoints[1] = "LeftUp";
+                }
+                snake.turningJoints[0] = "Up";
+            }
+            else if (e.KeyCode == Keys.S || e.KeyCode == Keys.Down)
+            {               
+                snake.VerVelocity = snake.Step;
+                snake.HorVelocity = 0;
+                snake.headRotateType = RotateFlipType.RotateNoneFlipNone;
+                //snake.tailRotateType = RotateFlipType.Rotate180FlipNone;
+                snake.bodyRotateType = RotateFlipType.RotateNoneFlipNone;
+                if (snake.MovementDirection == "Right")
+                {
+                    snake.turningJoints[1] = "RightDown";
                 }
                 if (snake.MovementDirection == "Left")
                 {
-                    snake.TurnAnimate(RotateFlipType.Rotate270FlipNone);
+                    snake.turningJoints[1] = "LeftDown";
                 }
-                snake.MovementDirection = "Up";*/
-            }
-            else if (e.KeyCode == Keys.S || e.KeyCode == Keys.Down)
-            {
-                snake.MovementDirection = "Down";
-                snake.VerVelocity = snake.Step;
-                snake.HorVelocity = 0;
-                headType = RotateFlipType.RotateNoneFlipNone;
-                tailType = RotateFlipType.Rotate180FlipNone;
-                bodyType = RotateFlipType.RotateNoneFlipNone;
+                snake.turningJoints[0] = "Down";
             }
             else if (e.KeyCode == Keys.A || e.KeyCode == Keys.Left)
             {
-                snake.MovementDirection = "Left";
+                
                 snake.HorVelocity = -snake.Step;
                 snake.VerVelocity = 0;
-                headType = RotateFlipType.Rotate90FlipNone;
-                tailType = RotateFlipType.Rotate270FlipNone;
-                bodyType = RotateFlipType.Rotate90FlipNone;
+                snake.headRotateType = RotateFlipType.Rotate90FlipNone;
+                //snake.tailRotateType = RotateFlipType.Rotate270FlipNone;
+                snake.bodyRotateType = RotateFlipType.Rotate90FlipNone;
+                if (snake.MovementDirection == "Up")
+                {
+                    snake.turningJoints[1] = "UpLeft";
+                }
+                if (snake.MovementDirection == "Down")
+                {
+                    snake.turningJoints[1] = "DownLeft";
+                }
+                snake.turningJoints[0] = "Left";
             }
             else if (e.KeyCode == Keys.D || e.KeyCode == Keys.Right)
-            {
-                snake.MovementDirection = "Right";
+            {               
                 snake.HorVelocity = snake.Step;
                 snake.VerVelocity = 0;
-                headType = RotateFlipType.Rotate270FlipNone;
-                tailType = RotateFlipType.Rotate90FlipNone;
-                bodyType = RotateFlipType.Rotate90FlipNone;
+                snake.headRotateType = RotateFlipType.Rotate270FlipNone;
+                //snake.tailRotateType = RotateFlipType.Rotate90FlipNone;
+                snake.bodyRotateType = RotateFlipType.Rotate90FlipNone;
+                if (snake.MovementDirection == "Up")
+                {
+                    snake.turningJoints[1] = "UpRight";
+                }
+                if (snake.MovementDirection == "Down")
+                {
+                    snake.turningJoints[1] = "DownRight";
+                }
+                snake.turningJoints[0] = "Right";
             }
         }
 

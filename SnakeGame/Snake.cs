@@ -11,6 +11,7 @@ namespace SnakeGame
     class Snake
     {
         public List<PictureBox> snakePixels = new List<PictureBox>();
+        public List<String> turningJoints = new List<String>();
         int initPositionTop = 200;
         int initPositionLeft = 200;
         int jointSize = 20;      
@@ -28,17 +29,22 @@ namespace SnakeGame
 
         public Point headPosition { get; set; }
 
+        public RotateFlipType headRotateType { get; set; } = RotateFlipType.Rotate180FlipNone;
+        public RotateFlipType bodyRotateType { get; set; } = RotateFlipType.RotateNoneFlipNone;
+        //public RotateFlipType tailRotateType { get; set; } = RotateFlipType.RotateNoneFlipNone;
+        public RotateFlipType turnRotateType { get; set; }
+
         private void InitializeSnake()
         {
             this.AddPixel(initPositionTop, initPositionLeft);
             this.AddPixel(initPositionTop, initPositionLeft + jointSize);
             this.AddPixel(initPositionTop, initPositionLeft + jointSize * 2);
 
-            this.HeadAnimate(RotateFlipType.Rotate180FlipNone);
-            this.BodyAnimate(RotateFlipType.RotateNoneFlipNone);
-            this.TailAnimate(RotateFlipType.RotateNoneFlipNone);
+            //this.HeadAnimate(RotateFlipType.Rotate180FlipNone);
+            //this.BodyAnimate(RotateFlipType.RotateNoneFlipNone);
+            //this.TailAnimate(RotateFlipType.RotateNoneFlipNone);
 
-            this.headPosition = this.snakePixels[0].Location;
+            //this.headPosition = this.snakePixels[0].Location;
         }
 
         public void AddPixel(int left, int top)
@@ -51,6 +57,18 @@ namespace SnakeGame
             pixel.Location = new Point(left, top);
 
             snakePixels.Add(pixel);
+
+            if (turningJoints.Count > 1)
+                //Array.Copy(turningJoints, 1, turningJoints, 0, 1);
+                turningJoints.Add(turningJoints[turningJoints.Count - 1]);
+            else
+                turningJoints.Add("Up");
+
+            /*PictureBox turnPixel = new PictureBox();
+            turnPixel.Height = jointSize;
+            turnPixel.Width = jointSize;
+            turnPixel.Location = new Point(-1, -1);
+            turningJoints.Add(turnPixel);*/
         }
 
         public void Render(Form form)
@@ -124,7 +142,7 @@ namespace SnakeGame
         
         public void HeadAnimate(RotateFlipType type)
         {
-            snakePixels[0].BackColor = Color.RosyBrown;
+            //snakePixels[0].BackColor = Color.RosyBrown;
             
             Bitmap initPicture = new Bitmap(Properties.Resources.Snake_sprite_sheet);
             RectangleF cloneRect = new RectangleF(1, 43, 40, 40);
@@ -135,25 +153,62 @@ namespace SnakeGame
             snakePixels[0].SizeMode = PictureBoxSizeMode.StretchImage;            
         }
 
-        public void TailAnimate(RotateFlipType type)
+        public void TailAnimate()// RotateFlipType type)
         {
-            snakePixels[snakePixels.Count-1].BackColor = Color.RosyBrown;
+            //snakePixels[snakePixels.Count-1].BackColor = Color.RosyBrown;
 
-            Bitmap initPicture = new Bitmap(Properties.Resources.Snake_sprite_sheet);
-            RectangleF cloneRect = new RectangleF(43, 85, 40, 40);
-            System.Drawing.Imaging.PixelFormat format = initPicture.PixelFormat;
-            Bitmap tail = initPicture.Clone(cloneRect, format);
-            tail.RotateFlip(type);
-            snakePixels[snakePixels.Count - 1].Image = tail;
-            snakePixels[snakePixels.Count - 1].SizeMode = PictureBoxSizeMode.StretchImage;
+            if (turningJoints[turningJoints.Count - 1] == "UpRight" ||
+                turningJoints[turningJoints.Count - 1] == "DownRight" ||
+                (turningJoints[turningJoints.Count - 1] == "Right"))
+            {              
+                Bitmap initPicture = new Bitmap(Properties.Resources.Snake_sprite_sheet);
+                RectangleF cloneRect = new RectangleF(43, 85, 40, 40);
+                System.Drawing.Imaging.PixelFormat format = initPicture.PixelFormat;
+                Bitmap tail = initPicture.Clone(cloneRect, format);
+                tail.RotateFlip(RotateFlipType.Rotate90FlipNone);
+                snakePixels[snakePixels.Count - 1].Image = tail;
+                snakePixels[snakePixels.Count - 1].SizeMode = PictureBoxSizeMode.StretchImage;
+            }
+            else if (turningJoints[turningJoints.Count - 1] == "UpLeft" ||
+                turningJoints[turningJoints.Count - 1] == "DownLeft" ||
+                (turningJoints[turningJoints.Count - 1] == "Left"))
+            {
+                Bitmap initPicture = new Bitmap(Properties.Resources.Snake_sprite_sheet);
+                RectangleF cloneRect = new RectangleF(43, 85, 40, 40);
+                System.Drawing.Imaging.PixelFormat format = initPicture.PixelFormat;
+                Bitmap tail = initPicture.Clone(cloneRect, format);
+                tail.RotateFlip(RotateFlipType.Rotate270FlipNone);
+                snakePixels[snakePixels.Count - 1].Image = tail;
+                snakePixels[snakePixels.Count - 1].SizeMode = PictureBoxSizeMode.StretchImage;
+            }
+            else if (turningJoints[turningJoints.Count - 1] == "RightDown" ||
+                turningJoints[turningJoints.Count - 1] == "LeftDown" ||
+                (turningJoints[turningJoints.Count - 1] == "Down"))
+            {
+                Bitmap initPicture = new Bitmap(Properties.Resources.Snake_sprite_sheet);
+                RectangleF cloneRect = new RectangleF(43, 85, 40, 40);
+                System.Drawing.Imaging.PixelFormat format = initPicture.PixelFormat;
+                Bitmap tail = initPicture.Clone(cloneRect, format);
+                tail.RotateFlip(RotateFlipType.Rotate180FlipNone);
+                snakePixels[snakePixels.Count - 1].Image = tail;
+                snakePixels[snakePixels.Count - 1].SizeMode = PictureBoxSizeMode.StretchImage;
+            }
+            else
+            {
+                Bitmap initPicture = new Bitmap(Properties.Resources.Snake_sprite_sheet);
+                RectangleF cloneRect = new RectangleF(43, 85, 40, 40);
+                System.Drawing.Imaging.PixelFormat format = initPicture.PixelFormat;
+                Bitmap tail = initPicture.Clone(cloneRect, format);
+                tail.RotateFlip(RotateFlipType.RotateNoneFlipNone);
+                snakePixels[snakePixels.Count - 1].Image = tail;
+                snakePixels[snakePixels.Count - 1].SizeMode = PictureBoxSizeMode.StretchImage;
+            }
         }
 
         public void BodyAnimate(RotateFlipType type)
         {
             for (int i = 1; i < snakePixels.Count-1; i++)
-            {
-                snakePixels[i].BackColor = Color.RosyBrown;
-
+            {               
                 Bitmap initPicture = new Bitmap(Properties.Resources.Snake_sprite_sheet);
                 RectangleF cloneRect = new RectangleF(85, 85, 40, 40);
                 System.Drawing.Imaging.PixelFormat format = initPicture.PixelFormat;
@@ -173,7 +228,32 @@ namespace SnakeGame
             turningPart.RotateFlip(type);
             snakePixels[bodyPart].Image = turningPart;
             snakePixels[bodyPart].SizeMode = PictureBoxSizeMode.StretchImage;
-        }  */     
+        }  */ 
+        
+        public void turningJointsShifting()
+        {
+            //if (turningJoints[turningJoints.Count-1] != "")
+            //{
+            //   turningJoints[turningJoints.Count - 1] = "";
+            //}
+
+            /*for (int i = turningJoints.Count - 1; i > 0; i--)
+            {
+                if (turningJoints[i - 1] != turningJoints[i])
+                {
+                    turningJoints[i] = turningJoints[i - 1];
+                    turningJoints[i - 1] = "";
+                }
+            }*/
+
+            for (int i = turningJoints.Count - 1; i > 0; i--)           
+                    turningJoints[i] = turningJoints[i - 1];                                  
+
+            //if (turningJoints[0] != "")
+            //{
+            //   turningJoints[0] = "";
+            //}
+        }
     }
 }
 

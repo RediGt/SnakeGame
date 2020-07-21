@@ -46,7 +46,7 @@ namespace SnakeGame
 
         public void GetFoodLocation()
         {
-            this.Location = new Point(20 + 20 * rand.Next(0, 29), 20 + 20 * rand.Next(0, 29));
+            this.Location = new Point(20 + 20 * rand.Next(0, 29), 20 + 20 * rand.Next(0, 28));
         }
     }
 }
