@@ -59,7 +59,7 @@ namespace SnakeGame
                 GameOver();
             snake.HeadAnimate(snake.headRotateType);
             snake.TailAnimate();
-            snake.BodyAnimate(snake.bodyRotateType);
+            snake.BodyAnimate(); //(snake.bodyRotateType);
             snake.Render(this);
             snake.turningJointsShifting();
         }       
@@ -71,7 +71,6 @@ namespace SnakeGame
                 snake.VerVelocity = -snake.Step;
                 snake.HorVelocity = 0;                
                 snake.headRotateType = RotateFlipType.Rotate180FlipNone;
-                //snake.tailRotateType = RotateFlipType.RotateNoneFlipNone;
                 snake.bodyRotateType = RotateFlipType.RotateNoneFlipNone;
                 if (snake.turningJoints[0] == MoveDirection.Right)
                 {
@@ -88,7 +87,6 @@ namespace SnakeGame
                 snake.VerVelocity = snake.Step;
                 snake.HorVelocity = 0;
                 snake.headRotateType = RotateFlipType.RotateNoneFlipNone;
-                //snake.tailRotateType = RotateFlipType.Rotate180FlipNone;
                 snake.bodyRotateType = RotateFlipType.RotateNoneFlipNone;
                 if (snake.turningJoints[0] == MoveDirection.Right)
                 {
@@ -105,7 +103,6 @@ namespace SnakeGame
                 snake.HorVelocity = -snake.Step;
                 snake.VerVelocity = 0;
                 snake.headRotateType = RotateFlipType.Rotate90FlipNone;
-                //snake.tailRotateType = RotateFlipType.Rotate270FlipNone;
                 snake.bodyRotateType = RotateFlipType.Rotate90FlipNone;
                 if (snake.turningJoints[0] == MoveDirection.Up)
                 {
@@ -122,7 +119,6 @@ namespace SnakeGame
                 snake.HorVelocity = snake.Step;
                 snake.VerVelocity = 0;
                 snake.headRotateType = RotateFlipType.Rotate270FlipNone;
-                //snake.tailRotateType = RotateFlipType.Rotate90FlipNone;
                 snake.bodyRotateType = RotateFlipType.Rotate90FlipNone;
                 if (snake.turningJoints[0] == MoveDirection.Up)
                 {

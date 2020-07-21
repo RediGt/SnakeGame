@@ -205,17 +205,32 @@ namespace SnakeGame
             }
         }
 
-        public void BodyAnimate(RotateFlipType type)
-        {
+        public void BodyAnimate() //(RotateFlipType type)
+        {            
             for (int i = 1; i < snakePixels.Count-1; i++)
             {               
-                Bitmap initPicture = new Bitmap(Properties.Resources.Snake_sprite_sheet);
-                RectangleF cloneRect = new RectangleF(85, 85, 40, 40);
-                System.Drawing.Imaging.PixelFormat format = initPicture.PixelFormat;
-                Bitmap body = initPicture.Clone(cloneRect, format);
-                body.RotateFlip(type);
-                snakePixels[i].Image = body;
-                snakePixels[i].SizeMode = PictureBoxSizeMode.StretchImage;
+                if (turningJoints[i] == MoveDirection.Right ||
+                    turningJoints[i] == MoveDirection.Left)
+                {
+                    Bitmap initPicture = new Bitmap(Properties.Resources.Snake_sprite_sheet);
+                    RectangleF cloneRect = new RectangleF(85, 85, 40, 40);
+                    System.Drawing.Imaging.PixelFormat format = initPicture.PixelFormat;
+                    Bitmap body = initPicture.Clone(cloneRect, format);
+                    body.RotateFlip(RotateFlipType.Rotate90FlipNone);
+                    snakePixels[i].Image = body;
+                    snakePixels[i].SizeMode = PictureBoxSizeMode.StretchImage;
+                }
+                else if (turningJoints[i] == MoveDirection.Up ||
+                    turningJoints[i] == MoveDirection.Down)
+                {
+                    Bitmap initPicture = new Bitmap(Properties.Resources.Snake_sprite_sheet);
+                    RectangleF cloneRect = new RectangleF(85, 85, 40, 40);
+                    System.Drawing.Imaging.PixelFormat format = initPicture.PixelFormat;
+                    Bitmap body = initPicture.Clone(cloneRect, format);
+                    body.RotateFlip(RotateFlipType.RotateNoneFlipNone);
+                    snakePixels[i].Image = body;
+                    snakePixels[i].SizeMode = PictureBoxSizeMode.StretchImage;
+                }
             }            
         }
         /*
@@ -255,21 +270,5 @@ namespace SnakeGame
             //}
         }
     }
-
-    /*public enum MovingDirection
-    {
-        Up,
-        UpRight,
-        UpLeft,
-        Down,
-        DownRight,
-        DownLeft,
-        Left,
-        LeftDown,
-        LeftUp,
-        Right,
-        RightDown,
-        RightUp
-    }*/
 }
 
