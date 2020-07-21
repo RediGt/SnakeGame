@@ -57,9 +57,10 @@ namespace SnakeGame
             SnakeFoodCollision();
             if(snake.BorderCollision(area))
                 GameOver();
-            snake.HeadAnimate(snake.headRotateType);
+            snake.HeadAnimate();
             snake.TailAnimate();
-            snake.BodyAnimate(); //(snake.bodyRotateType);
+            snake.BodyAnimate();
+            snake.TurnAnimate();
             snake.Render(this);
             snake.turningJointsShifting();
         }       
@@ -70,12 +71,12 @@ namespace SnakeGame
             {
                 snake.VerVelocity = -snake.Step;
                 snake.HorVelocity = 0;                
-                snake.headRotateType = RotateFlipType.Rotate180FlipNone;
-                snake.bodyRotateType = RotateFlipType.RotateNoneFlipNone;
+               
                 if (snake.turningJoints[0] == MoveDirection.Right)
                 {
                     snake.turningJoints[1] = MoveDirection.RightUp;
                 }
+
                 if (snake.turningJoints[0] == MoveDirection.Left)
                 {                    
                     snake.turningJoints[1] = MoveDirection.LeftUp;
@@ -86,12 +87,12 @@ namespace SnakeGame
             {               
                 snake.VerVelocity = snake.Step;
                 snake.HorVelocity = 0;
-                snake.headRotateType = RotateFlipType.RotateNoneFlipNone;
-                snake.bodyRotateType = RotateFlipType.RotateNoneFlipNone;
+                
                 if (snake.turningJoints[0] == MoveDirection.Right)
                 {
                     snake.turningJoints[1] = MoveDirection.RightDown;
                 }
+
                 if (snake.turningJoints[0] == MoveDirection.Left)
                 {
                     snake.turningJoints[1] = MoveDirection.LeftDown;
@@ -101,13 +102,13 @@ namespace SnakeGame
             else if (e.KeyCode == Keys.A || e.KeyCode == Keys.Left)
             {                
                 snake.HorVelocity = -snake.Step;
-                snake.VerVelocity = 0;
-                snake.headRotateType = RotateFlipType.Rotate90FlipNone;
-                snake.bodyRotateType = RotateFlipType.Rotate90FlipNone;
+                snake.VerVelocity = 0; 
+                
                 if (snake.turningJoints[0] == MoveDirection.Up)
                 {
                     snake.turningJoints[1] = MoveDirection.UpLeft;
                 }
+
                 if (snake.turningJoints[0] == MoveDirection.Down)
                 {
                     snake.turningJoints[1] = MoveDirection.DownLeft;
@@ -118,12 +119,12 @@ namespace SnakeGame
             {               
                 snake.HorVelocity = snake.Step;
                 snake.VerVelocity = 0;
-                snake.headRotateType = RotateFlipType.Rotate270FlipNone;
-                snake.bodyRotateType = RotateFlipType.Rotate90FlipNone;
+
                 if (snake.turningJoints[0] == MoveDirection.Up)
                 {
                     snake.turningJoints[1] = MoveDirection.UpRight;
                 }
+
                 if (snake.turningJoints[0] == MoveDirection.Down)
                 {
                     snake.turningJoints[1] = MoveDirection.DownRight;

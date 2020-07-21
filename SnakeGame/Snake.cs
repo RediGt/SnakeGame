@@ -25,26 +25,11 @@ namespace SnakeGame
         public int VerVelocity { get; set; } = 0;
         public int Step { get; set; } = 20;
 
-        //public string MovementDirection { get; set; } = "Up";
-
-        //public Point headPosition { get; set; }
-
-        public RotateFlipType headRotateType { get; set; } = RotateFlipType.Rotate180FlipNone;
-        public RotateFlipType bodyRotateType { get; set; } = RotateFlipType.RotateNoneFlipNone;
-        //public RotateFlipType tailRotateType { get; set; } = RotateFlipType.RotateNoneFlipNone;
-        //public RotateFlipType turnRotateType { get; set; }
-
         private void InitializeSnake()
         {
             this.AddPixel(initPositionTop, initPositionLeft);
             this.AddPixel(initPositionTop, initPositionLeft + jointSize);
             this.AddPixel(initPositionTop, initPositionLeft + jointSize * 2);
-
-            //this.HeadAnimate(RotateFlipType.Rotate180FlipNone);
-            //this.BodyAnimate(RotateFlipType.RotateNoneFlipNone);
-            //this.TailAnimate(RotateFlipType.RotateNoneFlipNone);
-
-            //this.headPosition = this.snakePixels[0].Location;
         }
 
         public void AddPixel(int left, int top)
@@ -59,16 +44,9 @@ namespace SnakeGame
             snakePixels.Add(pixel);
 
             if (turningJoints.Count > 1)
-                //Array.Copy(turningJoints, 1, turningJoints, 0, 1);
                 turningJoints.Add(turningJoints[turningJoints.Count - 1]);
             else
                 turningJoints.Add(MoveDirection.Up);
-
-            /*PictureBox turnPixel = new PictureBox();
-            turnPixel.Height = jointSize;
-            turnPixel.Width = jointSize;
-            turnPixel.Location = new Point(-1, -1);
-            turningJoints.Add(turnPixel);*/
         }
 
         public void Render(Form form)
@@ -140,134 +118,137 @@ namespace SnakeGame
                 return false;
         }*/ 
         
-        public void HeadAnimate(RotateFlipType type)
+        public void HeadAnimate()
         {
-            //snakePixels[0].BackColor = Color.RosyBrown;
-            
             Bitmap initPicture = new Bitmap(Properties.Resources.Snake_sprite_sheet);
             RectangleF cloneRect = new RectangleF(1, 43, 40, 40);
             System.Drawing.Imaging.PixelFormat format = initPicture.PixelFormat;
             Bitmap head1 = initPicture.Clone(cloneRect, format);
-            head1.RotateFlip(type);
+
+            switch (turningJoints[0])
+            {
+                case MoveDirection.Left:
+                    head1.RotateFlip(RotateFlipType.Rotate90FlipNone);
+                    break;
+                case MoveDirection.Right:
+                    head1.RotateFlip(RotateFlipType.Rotate270FlipNone);
+                    break;
+                case MoveDirection.Up:
+                    head1.RotateFlip(RotateFlipType.Rotate180FlipNone);
+                    break;
+                case MoveDirection.Down:
+                    head1.RotateFlip(RotateFlipType.RotateNoneFlipNone);
+                    break;
+            }
+          
             snakePixels[0].Image = head1;
-            snakePixels[0].SizeMode = PictureBoxSizeMode.StretchImage;            
+            snakePixels[0].SizeMode = PictureBoxSizeMode.StretchImage;
         }
 
-        public void TailAnimate()// RotateFlipType type)
-        {
-            //snakePixels[snakePixels.Count-1].BackColor = Color.RosyBrown;
-
-            if (turningJoints[turningJoints.Count - 1] == MoveDirection.UpRight ||
-                turningJoints[turningJoints.Count - 1] == MoveDirection.DownRight ||
-                (turningJoints[turningJoints.Count - 1] == MoveDirection.Right))
-            {              
-                Bitmap initPicture = new Bitmap(Properties.Resources.Snake_sprite_sheet);
-                RectangleF cloneRect = new RectangleF(43, 85, 40, 40);
-                System.Drawing.Imaging.PixelFormat format = initPicture.PixelFormat;
-                Bitmap tail = initPicture.Clone(cloneRect, format);
-                tail.RotateFlip(RotateFlipType.Rotate90FlipNone);
-                snakePixels[snakePixels.Count - 1].Image = tail;
-                snakePixels[snakePixels.Count - 1].SizeMode = PictureBoxSizeMode.StretchImage;
-            }
-            else if (turningJoints[turningJoints.Count - 1] == MoveDirection.UpLeft ||
-                turningJoints[turningJoints.Count - 1] == MoveDirection.DownLeft ||
-                (turningJoints[turningJoints.Count - 1] == MoveDirection.Left))
-            {
-                Bitmap initPicture = new Bitmap(Properties.Resources.Snake_sprite_sheet);
-                RectangleF cloneRect = new RectangleF(43, 85, 40, 40);
-                System.Drawing.Imaging.PixelFormat format = initPicture.PixelFormat;
-                Bitmap tail = initPicture.Clone(cloneRect, format);
-                tail.RotateFlip(RotateFlipType.Rotate270FlipNone);
-                snakePixels[snakePixels.Count - 1].Image = tail;
-                snakePixels[snakePixels.Count - 1].SizeMode = PictureBoxSizeMode.StretchImage;
-            }
-            else if (turningJoints[turningJoints.Count - 1] == MoveDirection.RightDown ||
-                turningJoints[turningJoints.Count - 1] == MoveDirection.LeftDown ||
-                (turningJoints[turningJoints.Count - 1] == MoveDirection.Down))
-            {
-                Bitmap initPicture = new Bitmap(Properties.Resources.Snake_sprite_sheet);
-                RectangleF cloneRect = new RectangleF(43, 85, 40, 40);
-                System.Drawing.Imaging.PixelFormat format = initPicture.PixelFormat;
-                Bitmap tail = initPicture.Clone(cloneRect, format);
-                tail.RotateFlip(RotateFlipType.Rotate180FlipNone);
-                snakePixels[snakePixels.Count - 1].Image = tail;
-                snakePixels[snakePixels.Count - 1].SizeMode = PictureBoxSizeMode.StretchImage;
-            }
-            else
-            {
-                Bitmap initPicture = new Bitmap(Properties.Resources.Snake_sprite_sheet);
-                RectangleF cloneRect = new RectangleF(43, 85, 40, 40);
-                System.Drawing.Imaging.PixelFormat format = initPicture.PixelFormat;
-                Bitmap tail = initPicture.Clone(cloneRect, format);
-                tail.RotateFlip(RotateFlipType.RotateNoneFlipNone);
-                snakePixels[snakePixels.Count - 1].Image = tail;
-                snakePixels[snakePixels.Count - 1].SizeMode = PictureBoxSizeMode.StretchImage;
-            }
-        }
-
-        public void BodyAnimate() //(RotateFlipType type)
-        {            
-            for (int i = 1; i < snakePixels.Count-1; i++)
-            {               
-                if (turningJoints[i] == MoveDirection.Right ||
-                    turningJoints[i] == MoveDirection.Left)
-                {
-                    Bitmap initPicture = new Bitmap(Properties.Resources.Snake_sprite_sheet);
-                    RectangleF cloneRect = new RectangleF(85, 85, 40, 40);
-                    System.Drawing.Imaging.PixelFormat format = initPicture.PixelFormat;
-                    Bitmap body = initPicture.Clone(cloneRect, format);
-                    body.RotateFlip(RotateFlipType.Rotate90FlipNone);
-                    snakePixels[i].Image = body;
-                    snakePixels[i].SizeMode = PictureBoxSizeMode.StretchImage;
-                }
-                else if (turningJoints[i] == MoveDirection.Up ||
-                    turningJoints[i] == MoveDirection.Down)
-                {
-                    Bitmap initPicture = new Bitmap(Properties.Resources.Snake_sprite_sheet);
-                    RectangleF cloneRect = new RectangleF(85, 85, 40, 40);
-                    System.Drawing.Imaging.PixelFormat format = initPicture.PixelFormat;
-                    Bitmap body = initPicture.Clone(cloneRect, format);
-                    body.RotateFlip(RotateFlipType.RotateNoneFlipNone);
-                    snakePixels[i].Image = body;
-                    snakePixels[i].SizeMode = PictureBoxSizeMode.StretchImage;
-                }
-            }            
-        }
-        /*
-        public void TurnAnimate(RotateFlipType type) //, int bodyPart
+        public void TailAnimate()
         {
             Bitmap initPicture = new Bitmap(Properties.Resources.Snake_sprite_sheet);
-            RectangleF cloneRect = new RectangleF(43, 1, 40, 40);
+            RectangleF cloneRect = new RectangleF(43, 85, 40, 40);
             System.Drawing.Imaging.PixelFormat format = initPicture.PixelFormat;
-            Bitmap turningPart = initPicture.Clone(cloneRect, format);
-            turningPart.RotateFlip(type);
-            snakePixels[bodyPart].Image = turningPart;
-            snakePixels[bodyPart].SizeMode = PictureBoxSizeMode.StretchImage;
-        }  */ 
+            Bitmap tail = initPicture.Clone(cloneRect, format);
+
+            switch (turningJoints[turningJoints.Count - 1])
+            {
+                case MoveDirection.UpRight:
+                case MoveDirection.DownRight:
+                case MoveDirection.Right:
+                    tail.RotateFlip(RotateFlipType.Rotate90FlipNone);
+                    break;
+                case MoveDirection.UpLeft:
+                case MoveDirection.DownLeft:
+                case MoveDirection.Left:
+                    tail.RotateFlip(RotateFlipType.Rotate270FlipNone);
+                    break;
+                case MoveDirection.RightDown:
+                case MoveDirection.LeftDown:
+                case MoveDirection.Down:
+                    tail.RotateFlip(RotateFlipType.Rotate180FlipNone);
+                    break;
+                case MoveDirection.RightUp:
+                case MoveDirection.LeftUp:
+                case MoveDirection.Up:
+                    tail.RotateFlip(RotateFlipType.RotateNoneFlipNone);
+                    break;
+            } 
+            
+            snakePixels[snakePixels.Count - 1].Image = tail;
+            snakePixels[snakePixels.Count - 1].SizeMode = PictureBoxSizeMode.StretchImage;
+        }
+
+        public void BodyAnimate()
+        {                                   
+            for (int i = 1; i < snakePixels.Count-1; i++)
+            {                                             
+                Bitmap initPicture = new Bitmap(Properties.Resources.Snake_sprite_sheet);
+                RectangleF cloneRect = new RectangleF(85, 85, 40, 40);
+                System.Drawing.Imaging.PixelFormat format = initPicture.PixelFormat;
+                Bitmap body = initPicture.Clone(cloneRect, format);
+
+                switch (turningJoints[i])
+                {
+                    case MoveDirection.Left:
+                    case MoveDirection.Right:
+                        body.RotateFlip(RotateFlipType.Rotate90FlipNone);
+                        break;
+                    case MoveDirection.Up:
+                    case MoveDirection.Down:
+                        body.RotateFlip(RotateFlipType.RotateNoneFlipNone);
+                        break;
+                }
+
+                snakePixels[i].Image = body;
+                snakePixels[i].SizeMode = PictureBoxSizeMode.StretchImage;                
+            }            
+        }
+        
+        public void TurnAnimate()
+        {
+            for (int i = 1; i < snakePixels.Count - 1; i++)
+            {
+                Bitmap initPicture = new Bitmap(Properties.Resources.Snake_sprite_sheet);
+                RectangleF cloneRect = new RectangleF(43, 1, 40, 40);
+                System.Drawing.Imaging.PixelFormat format = initPicture.PixelFormat;
+                Bitmap turningPart = initPicture.Clone(cloneRect, format);
+
+                switch (turningJoints[i])
+                {
+                    case MoveDirection.UpRight:
+                    case MoveDirection.LeftDown:
+                        turningPart.RotateFlip(RotateFlipType.RotateNoneFlipNone);
+                        snakePixels[i].Image = turningPart;
+                        snakePixels[i].SizeMode = PictureBoxSizeMode.StretchImage;
+                        break;
+                    case MoveDirection.UpLeft:
+                    case MoveDirection.RightDown:
+                        turningPart.RotateFlip(RotateFlipType.Rotate90FlipNone);
+                        snakePixels[i].Image = turningPart;
+                        snakePixels[i].SizeMode = PictureBoxSizeMode.StretchImage;
+                        break;
+                    case MoveDirection.DownLeft:
+                    case MoveDirection.RightUp:
+                        turningPart.RotateFlip(RotateFlipType.Rotate180FlipNone);
+                        snakePixels[i].Image = turningPart;
+                        snakePixels[i].SizeMode = PictureBoxSizeMode.StretchImage;
+                        break;
+                    case MoveDirection.DownRight:
+                    case MoveDirection.LeftUp:
+                        turningPart.RotateFlip(RotateFlipType.Rotate270FlipNone);
+                        snakePixels[i].Image = turningPart;
+                        snakePixels[i].SizeMode = PictureBoxSizeMode.StretchImage;
+                        break;
+                }                
+            }
+        } 
         
         public void turningJointsShifting()
-        {
-            //if (turningJoints[turningJoints.Count-1] != "")
-            //{
-            //   turningJoints[turningJoints.Count - 1] = "";
-            //}
-
-            /*for (int i = turningJoints.Count - 1; i > 0; i--)
-            {
-                if (turningJoints[i - 1] != turningJoints[i])
-                {
-                    turningJoints[i] = turningJoints[i - 1];
-                    turningJoints[i - 1] = "";
-                }
-            }*/
-
+        {           
             for (int i = turningJoints.Count - 1; i > 0; i--)           
                     turningJoints[i] = turningJoints[i - 1];                                  
-
-            //if (turningJoints[0] != "")
-            //{
-            //   turningJoints[0] = "";
-            //}
         }
     }
 }
