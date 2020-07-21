@@ -73,15 +73,15 @@ namespace SnakeGame
                 snake.headRotateType = RotateFlipType.Rotate180FlipNone;
                 //snake.tailRotateType = RotateFlipType.RotateNoneFlipNone;
                 snake.bodyRotateType = RotateFlipType.RotateNoneFlipNone;
-                if (snake.MovementDirection == "Right")
+                if (snake.turningJoints[0] == MoveDirection.Right)
                 {
-                    snake.turningJoints[1] = "RightUp";
+                    snake.turningJoints[1] = MoveDirection.RightUp;
                 }
-                if (snake.MovementDirection == "Left")
+                if (snake.turningJoints[0] == MoveDirection.Left)
                 {                    
-                    snake.turningJoints[1] = "LeftUp";
+                    snake.turningJoints[1] = MoveDirection.LeftUp;
                 }
-                snake.turningJoints[0] = "Up";
+                snake.turningJoints[0] = MoveDirection.Up;
             }
             else if (e.KeyCode == Keys.S || e.KeyCode == Keys.Down)
             {               
@@ -90,33 +90,32 @@ namespace SnakeGame
                 snake.headRotateType = RotateFlipType.RotateNoneFlipNone;
                 //snake.tailRotateType = RotateFlipType.Rotate180FlipNone;
                 snake.bodyRotateType = RotateFlipType.RotateNoneFlipNone;
-                if (snake.MovementDirection == "Right")
+                if (snake.turningJoints[0] == MoveDirection.Right)
                 {
-                    snake.turningJoints[1] = "RightDown";
+                    snake.turningJoints[1] = MoveDirection.RightDown;
                 }
-                if (snake.MovementDirection == "Left")
+                if (snake.turningJoints[0] == MoveDirection.Left)
                 {
-                    snake.turningJoints[1] = "LeftDown";
+                    snake.turningJoints[1] = MoveDirection.LeftDown;
                 }
-                snake.turningJoints[0] = "Down";
+                snake.turningJoints[0] = MoveDirection.Down;
             }
             else if (e.KeyCode == Keys.A || e.KeyCode == Keys.Left)
-            {
-                
+            {                
                 snake.HorVelocity = -snake.Step;
                 snake.VerVelocity = 0;
                 snake.headRotateType = RotateFlipType.Rotate90FlipNone;
                 //snake.tailRotateType = RotateFlipType.Rotate270FlipNone;
                 snake.bodyRotateType = RotateFlipType.Rotate90FlipNone;
-                if (snake.MovementDirection == "Up")
+                if (snake.turningJoints[0] == MoveDirection.Up)
                 {
-                    snake.turningJoints[1] = "UpLeft";
+                    snake.turningJoints[1] = MoveDirection.UpLeft;
                 }
-                if (snake.MovementDirection == "Down")
+                if (snake.turningJoints[0] == MoveDirection.Down)
                 {
-                    snake.turningJoints[1] = "DownLeft";
+                    snake.turningJoints[1] = MoveDirection.DownLeft;
                 }
-                snake.turningJoints[0] = "Left";
+                snake.turningJoints[0] = MoveDirection.Left;
             }
             else if (e.KeyCode == Keys.D || e.KeyCode == Keys.Right)
             {               
@@ -125,15 +124,15 @@ namespace SnakeGame
                 snake.headRotateType = RotateFlipType.Rotate270FlipNone;
                 //snake.tailRotateType = RotateFlipType.Rotate90FlipNone;
                 snake.bodyRotateType = RotateFlipType.Rotate90FlipNone;
-                if (snake.MovementDirection == "Up")
+                if (snake.turningJoints[0] == MoveDirection.Up)
                 {
-                    snake.turningJoints[1] = "UpRight";
+                    snake.turningJoints[1] = MoveDirection.UpRight;
                 }
-                if (snake.MovementDirection == "Down")
+                if (snake.turningJoints[0] == MoveDirection.Down)
                 {
-                    snake.turningJoints[1] = "DownRight";
+                    snake.turningJoints[1] = MoveDirection.DownRight;
                 }
-                snake.turningJoints[0] = "Right";
+                snake.turningJoints[0] = MoveDirection.Right;
             }
         }
 

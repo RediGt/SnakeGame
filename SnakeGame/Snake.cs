@@ -11,7 +11,7 @@ namespace SnakeGame
     class Snake
     {
         public List<PictureBox> snakePixels = new List<PictureBox>();
-        public List<String> turningJoints = new List<String>();
+        public List<MoveDirection> turningJoints = new List<MoveDirection>();
         int initPositionTop = 200;
         int initPositionLeft = 200;
         int jointSize = 20;      
@@ -25,14 +25,14 @@ namespace SnakeGame
         public int VerVelocity { get; set; } = 0;
         public int Step { get; set; } = 20;
 
-        public string MovementDirection { get; set; } = "Up";
+        //public string MovementDirection { get; set; } = "Up";
 
-        public Point headPosition { get; set; }
+        //public Point headPosition { get; set; }
 
         public RotateFlipType headRotateType { get; set; } = RotateFlipType.Rotate180FlipNone;
         public RotateFlipType bodyRotateType { get; set; } = RotateFlipType.RotateNoneFlipNone;
         //public RotateFlipType tailRotateType { get; set; } = RotateFlipType.RotateNoneFlipNone;
-        public RotateFlipType turnRotateType { get; set; }
+        //public RotateFlipType turnRotateType { get; set; }
 
         private void InitializeSnake()
         {
@@ -62,7 +62,7 @@ namespace SnakeGame
                 //Array.Copy(turningJoints, 1, turningJoints, 0, 1);
                 turningJoints.Add(turningJoints[turningJoints.Count - 1]);
             else
-                turningJoints.Add("Up");
+                turningJoints.Add(MoveDirection.Up);
 
             /*PictureBox turnPixel = new PictureBox();
             turnPixel.Height = jointSize;
@@ -157,9 +157,9 @@ namespace SnakeGame
         {
             //snakePixels[snakePixels.Count-1].BackColor = Color.RosyBrown;
 
-            if (turningJoints[turningJoints.Count - 1] == "UpRight" ||
-                turningJoints[turningJoints.Count - 1] == "DownRight" ||
-                (turningJoints[turningJoints.Count - 1] == "Right"))
+            if (turningJoints[turningJoints.Count - 1] == MoveDirection.UpRight ||
+                turningJoints[turningJoints.Count - 1] == MoveDirection.DownRight ||
+                (turningJoints[turningJoints.Count - 1] == MoveDirection.Right))
             {              
                 Bitmap initPicture = new Bitmap(Properties.Resources.Snake_sprite_sheet);
                 RectangleF cloneRect = new RectangleF(43, 85, 40, 40);
@@ -169,9 +169,9 @@ namespace SnakeGame
                 snakePixels[snakePixels.Count - 1].Image = tail;
                 snakePixels[snakePixels.Count - 1].SizeMode = PictureBoxSizeMode.StretchImage;
             }
-            else if (turningJoints[turningJoints.Count - 1] == "UpLeft" ||
-                turningJoints[turningJoints.Count - 1] == "DownLeft" ||
-                (turningJoints[turningJoints.Count - 1] == "Left"))
+            else if (turningJoints[turningJoints.Count - 1] == MoveDirection.UpLeft ||
+                turningJoints[turningJoints.Count - 1] == MoveDirection.DownLeft ||
+                (turningJoints[turningJoints.Count - 1] == MoveDirection.Left))
             {
                 Bitmap initPicture = new Bitmap(Properties.Resources.Snake_sprite_sheet);
                 RectangleF cloneRect = new RectangleF(43, 85, 40, 40);
@@ -181,9 +181,9 @@ namespace SnakeGame
                 snakePixels[snakePixels.Count - 1].Image = tail;
                 snakePixels[snakePixels.Count - 1].SizeMode = PictureBoxSizeMode.StretchImage;
             }
-            else if (turningJoints[turningJoints.Count - 1] == "RightDown" ||
-                turningJoints[turningJoints.Count - 1] == "LeftDown" ||
-                (turningJoints[turningJoints.Count - 1] == "Down"))
+            else if (turningJoints[turningJoints.Count - 1] == MoveDirection.RightDown ||
+                turningJoints[turningJoints.Count - 1] == MoveDirection.LeftDown ||
+                (turningJoints[turningJoints.Count - 1] == MoveDirection.Down))
             {
                 Bitmap initPicture = new Bitmap(Properties.Resources.Snake_sprite_sheet);
                 RectangleF cloneRect = new RectangleF(43, 85, 40, 40);
@@ -255,5 +255,21 @@ namespace SnakeGame
             //}
         }
     }
+
+    /*public enum MovingDirection
+    {
+        Up,
+        UpRight,
+        UpLeft,
+        Down,
+        DownRight,
+        DownLeft,
+        Left,
+        LeftDown,
+        LeftUp,
+        Right,
+        RightDown,
+        RightUp
+    }*/
 }
 

@@ -49,6 +49,7 @@
     <Compile Include="Area.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="MoveDirection.cs" />
     <Compile Include="Food.cs">
       <SubType>Component</SubType>
     </Compile>
