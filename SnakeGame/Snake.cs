@@ -14,7 +14,6 @@ namespace SnakeGame
         public List<MoveDirection> turningJoints = new List<MoveDirection>();
         int initPositionTop = 200;
         int initPositionLeft = 200;
-        int jointSize = 20;      
 
         public Snake()
         {
@@ -23,21 +22,21 @@ namespace SnakeGame
 
         public int HorVelocity { get; set; } = 0;
         public int VerVelocity { get; set; } = 0;
-        public int Step { get; set; } = 20;
+        public int Step { get; set; } = Area.CellSize;
 
         private void InitializeSnake()
         {
             this.AddPixel(initPositionTop, initPositionLeft);
-            this.AddPixel(initPositionTop, initPositionLeft + jointSize);
-            this.AddPixel(initPositionTop, initPositionLeft + jointSize * 2);
+            this.AddPixel(initPositionTop, initPositionLeft + Area.CellSize);
+            this.AddPixel(initPositionTop, initPositionLeft + Area.CellSize * 2);
         }
 
         public void AddPixel(int left, int top)
         {
             PictureBox pixel;
             pixel = new PictureBox();
-            pixel.Height = jointSize;
-            pixel.Width = jointSize;
+            pixel.Height = Area.CellSize;
+            pixel.Width = Area.CellSize;
             pixel.BackColor = Color.RosyBrown;
             pixel.Location = new Point(left, top);
 

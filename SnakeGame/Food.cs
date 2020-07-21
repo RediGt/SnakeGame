@@ -8,45 +8,41 @@ using System.Windows.Forms;
 
 namespace SnakeGame
 {
-    class Food : PictureBox
+    class Food
     {
         Random rand = new Random();
-        //public List<PictureBox> foodCollection = new List<PictureBox>();
+        public List<PictureBox> foodCollection = new List<PictureBox>();
         public Food()
         {
             InitializeFood();           
         }
-
-        /*
+      
         private void InitializeFood()
-        {
-            foodCollection[0].Image = Properties.Resources.Apple;
-            foodCollection[1].Image = Properties.Resources.Pear;
-            foodCollection[2].Image = Properties.Resources.Grape;
-
+        {           
             for (int i = 0; i < 3; i++)
             {
-                foodCollection[i].Width = 20;
-                foodCollection[i].Height = 20;
-                foodCollection[i].SizeMode = PictureBoxSizeMode.StretchImage;
+                PictureBox food = new PictureBox();
+                food.Height = Area.CellSize;
+                food.Width = Area.CellSize;
+                food.BackColor = Color.RosyBrown;
+                food.SizeMode = PictureBoxSizeMode.StretchImage;
+
+                foodCollection.Add(food);
             }
-            
-        }*/
 
-        
-        private void InitializeFood()
+            foodCollection[0].Image = Properties.Resources.Apple;
+            foodCollection[1].Image = Properties.Resources.Pear;
+            foodCollection[2].Image = Properties.Resources.Grape;           
+        }     
+
+        public void GetFoodLocation(int foodIndex)
         {
-            this.Width = 20;
-            this.Height = 20;
-            this.Image = Properties.Resources.Pear;
-            this.BackColor = Color.RosyBrown;
-            this.SizeMode = PictureBoxSizeMode.StretchImage;
-
+            foodCollection[foodIndex].Location = new Point(20 + 20 * rand.Next(1, 28), 20 + 20 * rand.Next(1, 28));
         }
 
-        public void GetFoodLocation()
+        public int FoodIndex()
         {
-            this.Location = new Point(20 + 20 * rand.Next(0, 29), 20 + 20 * rand.Next(0, 28));
+            return rand.Next(0, 3);
         }
     }
 }

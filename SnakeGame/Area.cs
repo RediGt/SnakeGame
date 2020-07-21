@@ -21,5 +21,7 @@ namespace SnakeGame
             this.Height = 400;
             this.Width = 400;
         }
+
+        public static int CellSize { get; set; } = 20;
     }
 }

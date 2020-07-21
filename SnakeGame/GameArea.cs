@@ -15,7 +15,8 @@ namespace SnakeGame
         Area area = new Area();
         Snake snake = new Snake();
         Timer mainTimer = new Timer();
-        Food food = new Food();       
+        Food food = new Food();
+        int foodIndex;
         private int score;
 
         public GameArea()
@@ -34,7 +35,12 @@ namespace SnakeGame
             area.Height = ClientRectangle.Height - 20 * 2;
             area.Width = ClientRectangle.Width - 20 * 2;
 
-            this.Controls.Add(food);
+            for (int i = 0; i < 3; i++)
+            {
+                this.Controls.Add(food.foodCollection[i]);
+                food.foodCollection[i].Visible = false;
+            }
+
             SetFoodLocation();
             score = 0;
 
@@ -143,23 +149,28 @@ namespace SnakeGame
         private void SetFoodLocation()
         {
             int jointCount;
+            food.foodCollection[0].Visible = false;
+            food.foodCollection[1].Visible = false;
+            food.foodCollection[2].Visible = false;
+            foodIndex = food.FoodIndex();
             do
             {
-                food.GetFoodLocation();
+                food.GetFoodLocation(foodIndex);
                 jointCount = 0;
                 foreach (var item in snake.snakePixels)
                 {
-                    if (item.Location != food.Location)
+                    if (item.Location != food.foodCollection[foodIndex].Location)
                         jointCount++;
                 }
             }
             while (jointCount != snake.snakePixels.Count);
-            food.BringToFront();
+            food.foodCollection[foodIndex].BringToFront();
+            food.foodCollection[foodIndex].Visible = true;
         }
 
         private void SnakeFoodCollision()
         {
-            if (snake.snakePixels[0].Bounds.IntersectsWith(food.Bounds))
+            if (snake.snakePixels[0].Bounds.IntersectsWith(food.foodCollection[foodIndex].Bounds))
             {
                 score += 10;
                 SetFoodLocation();
