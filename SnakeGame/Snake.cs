@@ -83,39 +83,19 @@ namespace SnakeGame
             return false;
         }
 
-        public bool invalidMove()
+        public bool snakeIntersected()
         {
-            if (snakePixels[0].Left + HorVelocity == snakePixels[1].Left &&
-                snakePixels[0].Top + VerVelocity == snakePixels[1].Top)
+            for (int i = 1; i < this.snakePixels.Count; i++)
             {
-                snakePixels[0].BackColor = Color.Red;
-                return true;
+                if (this.snakePixels[0].Location == this.snakePixels[i].Location)
+                {
+                    this.snakePixels[0].BackColor = Color.Red;
+                    this.snakePixels[0].BringToFront();
+                    return true;
+                }
             }
             return false;
         }
-
-        /*public void invalidMove(Timer timer)
-        {
-            if (snakePixels[0].Left + HorVelocity == snakePixels[1].Left &&
-                snakePixels[0].Top + VerVelocity == snakePixels[1].Top)
-            {
-                snakePixels[0].BackColor = Color.Red;
-
-                //timer.Stop();
-                // MessageBox.Show("I ate myself");
-            }
-        }*/
-
-        /*
-        public bool invalidMove2(int X, int Y)
-        {
-            if (snakePixels.Count > 1 &&
-                snakePixels[0].Left + X == snakePixels[1].Left &&
-                snakePixels[0].Top + Y == snakePixels[1].Top)
-                return true;
-            else
-                return false;
-        }*/ 
         
         public void HeadAnimate()
         {

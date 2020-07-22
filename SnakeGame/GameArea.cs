@@ -11,29 +11,34 @@ using System.Windows.Forms;
 namespace SnakeGame
 {
     public partial class GameArea : Form
-    {        
+    {
         Area area = new Area();
         Snake snake = new Snake();
         Timer mainTimer = new Timer();
         Food food = new Food();
         int foodIndex;
         private int score;
+        //string arrowStatus;
+        int settingsAreaWidth = 260;
 
         public GameArea()
         {
             InitializeComponent();
             InitializeGame();
             InitializeTimer();
+            InitializeSettingsArrow();
+            InitializeSettingsPanel();
+            InitializeButtons();
         }
 
         private void InitializeGame()
         {
             this.Height = 640;
-            this.Width = 640;
+            this.Width = 860;
             this.Controls.Add(area);
             area.Location = new Point(20, 20);
             area.Height = ClientRectangle.Height - 20 * 2;
-            area.Width = ClientRectangle.Width - 20 * 2;
+            area.Width = ClientRectangle.Width - settingsAreaWidth;  //580
 
             for (int i = 0; i < 3; i++)
             {
@@ -45,7 +50,7 @@ namespace SnakeGame
             score = 0;
 
             //adding snake body
-            snake.Render(this);           
+            snake.Render(this);
         }
 
         private void InitializeTimer()
@@ -57,11 +62,11 @@ namespace SnakeGame
 
         private void MainTimer_Tick(object sender, EventArgs e)
         {
-            if(snake.invalidMove())
+            if (snake.snakeIntersected())
                 GameOver();
             snake.SnakeMove();
             SnakeFoodCollision();
-            if(snake.BorderCollision(area))
+            if (snake.BorderCollision(area))
                 GameOver();
             snake.HeadAnimate();
             snake.TailAnimate();
@@ -69,73 +74,87 @@ namespace SnakeGame
             snake.TurnAnimate();
             snake.Render(this);
             snake.turningJointsShifting();
-        }       
+        }
 
         private void Game_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.KeyCode == Keys.W || e.KeyCode == Keys.Up)
+            switch (e.KeyCode)
             {
-                snake.VerVelocity = -snake.Step;
-                snake.HorVelocity = 0;                
-               
-                if (snake.turningJoints[0] == MoveDirection.Right)
-                {
-                    snake.turningJoints[1] = MoveDirection.RightUp;
-                }
+                case Keys.W:
+                case Keys.Up:
+                    if (snake.VerVelocity == snake.Step)
+                        return;
+                    snake.VerVelocity = -snake.Step;
+                    snake.HorVelocity = 0;
 
-                if (snake.turningJoints[0] == MoveDirection.Left)
-                {                    
-                    snake.turningJoints[1] = MoveDirection.LeftUp;
-                }
-                snake.turningJoints[0] = MoveDirection.Up;
-            }
-            else if (e.KeyCode == Keys.S || e.KeyCode == Keys.Down)
-            {               
-                snake.VerVelocity = snake.Step;
-                snake.HorVelocity = 0;
-                
-                if (snake.turningJoints[0] == MoveDirection.Right)
-                {
-                    snake.turningJoints[1] = MoveDirection.RightDown;
-                }
+                    if (snake.turningJoints[0] == MoveDirection.Right)
+                    {
+                        snake.turningJoints[1] = MoveDirection.RightUp;
+                    }
 
-                if (snake.turningJoints[0] == MoveDirection.Left)
-                {
-                    snake.turningJoints[1] = MoveDirection.LeftDown;
-                }
-                snake.turningJoints[0] = MoveDirection.Down;
-            }
-            else if (e.KeyCode == Keys.A || e.KeyCode == Keys.Left)
-            {                
-                snake.HorVelocity = -snake.Step;
-                snake.VerVelocity = 0; 
-                
-                if (snake.turningJoints[0] == MoveDirection.Up)
-                {
-                    snake.turningJoints[1] = MoveDirection.UpLeft;
-                }
+                    if (snake.turningJoints[0] == MoveDirection.Left)
+                    {
+                        snake.turningJoints[1] = MoveDirection.LeftUp;
+                    }
+                    snake.turningJoints[0] = MoveDirection.Up;
+                    break;
 
-                if (snake.turningJoints[0] == MoveDirection.Down)
-                {
-                    snake.turningJoints[1] = MoveDirection.DownLeft;
-                }
-                snake.turningJoints[0] = MoveDirection.Left;
-            }
-            else if (e.KeyCode == Keys.D || e.KeyCode == Keys.Right)
-            {               
-                snake.HorVelocity = snake.Step;
-                snake.VerVelocity = 0;
+                case Keys.S:
+                case Keys.Down:
+                    if (snake.VerVelocity == -snake.Step)
+                        return;
+                    snake.VerVelocity = snake.Step;
+                    snake.HorVelocity = 0;
 
-                if (snake.turningJoints[0] == MoveDirection.Up)
-                {
-                    snake.turningJoints[1] = MoveDirection.UpRight;
-                }
+                    if (snake.turningJoints[0] == MoveDirection.Right)
+                    {
+                        snake.turningJoints[1] = MoveDirection.RightDown;
+                    }
 
-                if (snake.turningJoints[0] == MoveDirection.Down)
-                {
-                    snake.turningJoints[1] = MoveDirection.DownRight;
-                }
-                snake.turningJoints[0] = MoveDirection.Right;
+                    if (snake.turningJoints[0] == MoveDirection.Left)
+                    {
+                        snake.turningJoints[1] = MoveDirection.LeftDown;
+                    }
+                    snake.turningJoints[0] = MoveDirection.Down;
+                    break;
+
+                case Keys.A:
+                case Keys.Left:
+                    if (snake.HorVelocity == snake.Step)
+                        return;
+                    snake.HorVelocity = -snake.Step;
+                    snake.VerVelocity = 0;
+
+                    if (snake.turningJoints[0] == MoveDirection.Up)
+                    {
+                        snake.turningJoints[1] = MoveDirection.UpLeft;
+                    }
+
+                    if (snake.turningJoints[0] == MoveDirection.Down)
+                    {
+                        snake.turningJoints[1] = MoveDirection.DownLeft;
+                    }
+                    snake.turningJoints[0] = MoveDirection.Left;
+                    break;
+
+                case Keys.D:
+                case Keys.Right:
+                    if (snake.HorVelocity == -snake.Step)
+                        return;
+                    snake.HorVelocity = snake.Step;
+                    snake.VerVelocity = 0;
+
+                    if (snake.turningJoints[0] == MoveDirection.Up)
+                    {
+                        snake.turningJoints[1] = MoveDirection.UpRight;
+                    }
+
+                    if (snake.turningJoints[0] == MoveDirection.Down)
+                    {
+                        snake.turningJoints[1] = MoveDirection.DownRight;
+                    }
+                    snake.turningJoints[0] = MoveDirection.Right;
+                    break;
             }
         }
 
@@ -173,6 +192,7 @@ namespace SnakeGame
             if (snake.snakePixels[0].Bounds.IntersectsWith(food.foodCollection[foodIndex].Bounds))
             {
                 score += 10;
+                lblScore.Text = "Score : " + score;
                 SetFoodLocation();
                 int left = snake.snakePixels[snake.snakePixels.Count - 1].Left;
                 int top = snake.snakePixels[snake.snakePixels.Count - 1].Top;
@@ -180,6 +200,107 @@ namespace SnakeGame
                 snake.Render(this);
                 //if (mainTimer.Interval >= 20)
                 //    mainTimer.Interval -= 20;
+            }
+        }
+
+        PictureBox arrow = new PictureBox();
+        ToolTip arrowHint = new ToolTip();
+        string arrowStatus;
+        string pauseStatus = "unPaused";
+
+        private void InitializeSettingsPanel()
+        {
+            panelSettings.Top = Area.CellSize;
+            panelSettings.Left = area.Left + area.Width + Area.CellSize;
+        }
+
+        private void InitializeSettingsArrow()
+        {
+            arrow.Height = Area.CellSize;
+            arrow.Width = Area.CellSize;
+            arrow.BackColor = this.BackColor;
+            arrow.SizeMode = PictureBoxSizeMode.StretchImage;
+            arrow.Image = Properties.Resources.arrow_left;
+            arrow.Location = new Point(area.Width, ClientRectangle.Height - Area.CellSize);
+
+            this.Controls.Add(arrow);
+            arrow.Click += new EventHandler(arrow_Click);
+            arrow.MouseEnter += new EventHandler(arrow_Enter);
+            arrow.MouseLeave += new EventHandler(arrow_Leave);
+
+            arrowStatus = "unClicked";
+        }
+
+        private void arrow_Click(object sender, EventArgs e)
+        {
+            if (arrowStatus == "unClicked")
+            {
+                this.Width = area.Width + Area.CellSize * 3;
+                arrowStatus = "Clicked";
+                arrow.Image = Properties.Resources.arrow_right;
+            }
+            else if (arrowStatus == "Clicked")
+            {
+                this.Width = area.Width + settingsAreaWidth;
+                arrow.Image = Properties.Resources.arrow_left;
+                arrowStatus = "unClicked";
+            }
+        }
+
+        private void arrow_Enter(object sender, EventArgs e)
+        {
+            if (arrowStatus == "unClicked")
+            {
+                arrowHint.Show("Lock the settings", this, Cursor.Position.X - this.Location.X, Cursor.Position.Y - this.Location.Y);
+            }
+            else if (arrowStatus == "Clicked")
+            {
+                arrowHint.Show("Unlock the settings", this, Cursor.Position.X - this.Location.X, Cursor.Position.Y - this.Location.Y);
+            }
+        }
+        
+        private void arrow_Leave(object sender, EventArgs e)
+        {
+            arrowHint.Hide(arrow);
+        }
+
+        private void InitializeButtons()
+        {
+            btnExit.Enabled = false;
+            btnPause.Enabled = false;
+            btnHighScores.Enabled = false;
+            btnRestart.Enabled = false;
+            panelButtons.MouseEnter += new EventHandler(panelButtons_Enter);
+            panelButtons.MouseLeave += new EventHandler(panelButtons_Leave);
+        }
+
+        private void panelButtons_Enter(object sender, EventArgs e)
+        {
+            btnExit.Enabled = true;
+            btnPause.Enabled = true;
+            btnHighScores.Enabled = true;
+            btnRestart.Enabled = true;
+        }
+
+        private void panelButtons_Leave(object sender, EventArgs e)
+        {
+            btnExit.Enabled = false;
+            btnPause.Enabled = false;
+            btnHighScores.Enabled = false;
+            btnRestart.Enabled = false;
+        }
+
+        private void btnPause_Click(object sender, EventArgs e)
+        {
+            if (pauseStatus == "unPaused")
+            {
+                mainTimer.Stop();
+                pauseStatus = "Paused";
+            }
+            else if (pauseStatus == "Paused")
+            {
+                mainTimer.Start();
+                pauseStatus = "unPaused";
             }
         }
     }
