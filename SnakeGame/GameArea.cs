@@ -161,6 +161,7 @@ namespace SnakeGame
         private void GameOver()
         {
             mainTimer.Stop();
+            lblGameOver.Text = "GAME OVER";
             lblGameOver.Visible = true;
             lblGameOver.BringToFront();
         }
@@ -198,9 +199,19 @@ namespace SnakeGame
                 int top = snake.snakePixels[snake.snakePixels.Count - 1].Top;
                 snake.AddPixel(left, top);
                 snake.Render(this);
-                //if (mainTimer.Interval >= 20)
-                //    mainTimer.Interval -= 20;
+                if (score >= 200)
+                    LevelCompleted();
+                if (mainTimer.Interval >= 20)
+                    mainTimer.Interval -= 20;
             }
+        }
+
+        private void LevelCompleted()
+        {
+            mainTimer.Stop();
+            lblGameOver.Text = "LEVEL 1. COMPLETED";
+            lblGameOver.Visible = true;
+            lblGameOver.BringToFront();
         }
 
         PictureBox arrow = new PictureBox();
@@ -270,27 +281,30 @@ namespace SnakeGame
             btnPause.Enabled = false;
             btnHighScores.Enabled = false;
             btnRestart.Enabled = false;
-            panelButtons.MouseEnter += new EventHandler(panelButtons_Enter);
-            panelButtons.MouseLeave += new EventHandler(panelButtons_Leave);
+            //panelExit.MouseEnter += new EventHandler(panelButtons_Enter);
+            //panelExit.MouseLeave += new EventHandler(panelButtons_Leave);
+            //panelPause.MouseEnter += new EventHandler(panelPause_Enter);
+            //panelPause.MouseLeave += new EventHandler(panelPause_Leave);
+            //panel1.MouseEnter += new EventHandler(panelButtons_Enter);
         }
 
-        private void panelButtons_Enter(object sender, EventArgs e)
+        private void panelPause_Enter(object sender, EventArgs e)
         {
-            btnExit.Enabled = true;
+            //btnExit.Enabled = true;
             btnPause.Enabled = true;
-            btnHighScores.Enabled = true;
-            btnRestart.Enabled = true;
+            //btnHighScores.Enabled = true;
+            //btnRestart.Enabled = true;
         }
 
-        private void panelButtons_Leave(object sender, EventArgs e)
+        private void panelPause_Leave(object sender, EventArgs e)
         {
-            btnExit.Enabled = false;
+            //btnExit.Enabled = false;
             btnPause.Enabled = false;
-            btnHighScores.Enabled = false;
-            btnRestart.Enabled = false;
+            //btnHighScores.Enabled = false;
+            //btnRestart.Enabled = false; 
         }
 
-        private void btnPause_Click(object sender, EventArgs e)
+        /*private void btnPause_Click(object sender, EventArgs e)
         {
             if (pauseStatus == "unPaused")
             {
@@ -302,6 +316,25 @@ namespace SnakeGame
                 mainTimer.Start();
                 pauseStatus = "unPaused";
             }
+        }*/
+
+        /*private void btnPause_Click(object sender, EventArgs e)
+        {
+            if (pauseStatus == "unPaused")
+            {
+                mainTimer.Stop();
+                pauseStatus = "Paused";
+            }
+            else if (pauseStatus == "Paused")
+            {
+                mainTimer.Start();
+                pauseStatus = "unPaused";
+            }
+        }*/
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            this.Close();
         }
     }
 }
