@@ -30,23 +30,15 @@
         {
             this.lblGameOver = new System.Windows.Forms.Label();
             this.panelSettings = new System.Windows.Forms.Panel();
-            this.panelExit = new System.Windows.Forms.Panel();
-            this.btnHighScores = new System.Windows.Forms.Button();
             this.btnExit = new System.Windows.Forms.Button();
+            this.btnHighScores = new System.Windows.Forms.Button();
             this.btnRestart = new System.Windows.Forms.Button();
             this.btnPause = new System.Windows.Forms.Button();
             this.lblScore = new System.Windows.Forms.Label();
             this.lblTask = new System.Windows.Forms.Label();
             this.lblLevelTask = new System.Windows.Forms.Label();
             this.lblLevel = new System.Windows.Forms.Label();
-            this.panelHiScores = new System.Windows.Forms.Panel();
-            this.panelRestart = new System.Windows.Forms.Panel();
-            this.panelPause = new System.Windows.Forms.Panel();
             this.panelSettings.SuspendLayout();
-            this.panelExit.SuspendLayout();
-            this.panelHiScores.SuspendLayout();
-            this.panelRestart.SuspendLayout();
-            this.panelPause.SuspendLayout();
             this.SuspendLayout();
             // 
             // lblGameOver
@@ -64,57 +56,52 @@
             // 
             // panelSettings
             // 
-            this.panelSettings.Controls.Add(this.panelPause);
-            this.panelSettings.Controls.Add(this.panelRestart);
-            this.panelSettings.Controls.Add(this.panelHiScores);
-            this.panelSettings.Controls.Add(this.panelExit);
+            this.panelSettings.Controls.Add(this.btnExit);
+            this.panelSettings.Controls.Add(this.btnHighScores);
+            this.panelSettings.Controls.Add(this.btnRestart);
+            this.panelSettings.Controls.Add(this.btnPause);
             this.panelSettings.Controls.Add(this.lblScore);
             this.panelSettings.Controls.Add(this.lblTask);
             this.panelSettings.Controls.Add(this.lblLevelTask);
             this.panelSettings.Controls.Add(this.lblLevel);
-            this.panelSettings.Location = new System.Drawing.Point(372, 28);
+            this.panelSettings.Location = new System.Drawing.Point(571, 34);
             this.panelSettings.Name = "panelSettings";
             this.panelSettings.Size = new System.Drawing.Size(200, 500);
             this.panelSettings.TabIndex = 1;
-            // 
-            // panelExit
-            // 
-            this.panelExit.Controls.Add(this.btnExit);
-            this.panelExit.Location = new System.Drawing.Point(27, 430);
-            this.panelExit.Name = "panelExit";
-            this.panelExit.Size = new System.Drawing.Size(138, 38);
-            this.panelExit.TabIndex = 8;
-            // 
-            // btnHighScores
-            // 
-            this.btnHighScores.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnHighScores.ImageAlign = System.Drawing.ContentAlignment.TopRight;
-            this.btnHighScores.Location = new System.Drawing.Point(6, 4);
-            this.btnHighScores.Name = "btnHighScores";
-            this.btnHighScores.Size = new System.Drawing.Size(124, 31);
-            this.btnHighScores.TabIndex = 7;
-            this.btnHighScores.Text = "Highscores";
-            this.btnHighScores.UseVisualStyleBackColor = true;
             // 
             // btnExit
             // 
             this.btnExit.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnExit.ImageAlign = System.Drawing.ContentAlignment.TopRight;
-            this.btnExit.Location = new System.Drawing.Point(6, 4);
+            this.btnExit.Location = new System.Drawing.Point(39, 431);
             this.btnExit.Name = "btnExit";
             this.btnExit.Size = new System.Drawing.Size(124, 31);
             this.btnExit.TabIndex = 6;
+            this.btnExit.TabStop = false;
             this.btnExit.Text = "Exit";
             this.btnExit.UseVisualStyleBackColor = true;
+            // 
+            // btnHighScores
+            // 
+            this.btnHighScores.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnHighScores.ImageAlign = System.Drawing.ContentAlignment.TopRight;
+            this.btnHighScores.Location = new System.Drawing.Point(39, 394);
+            this.btnHighScores.Name = "btnHighScores";
+            this.btnHighScores.Size = new System.Drawing.Size(124, 31);
+            this.btnHighScores.TabIndex = 7;
+            this.btnHighScores.TabStop = false;
+            this.btnHighScores.Text = "Highscores";
+            this.btnHighScores.UseVisualStyleBackColor = true;
             // 
             // btnRestart
             // 
             this.btnRestart.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnRestart.ImageAlign = System.Drawing.ContentAlignment.TopRight;
-            this.btnRestart.Location = new System.Drawing.Point(6, 7);
+            this.btnRestart.Location = new System.Drawing.Point(39, 357);
             this.btnRestart.Name = "btnRestart";
             this.btnRestart.Size = new System.Drawing.Size(124, 31);
             this.btnRestart.TabIndex = 5;
+            this.btnRestart.TabStop = false;
             this.btnRestart.Text = "Restart";
             this.btnRestart.UseVisualStyleBackColor = true;
             // 
@@ -122,12 +109,14 @@
             // 
             this.btnPause.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnPause.ImageAlign = System.Drawing.ContentAlignment.TopRight;
-            this.btnPause.Location = new System.Drawing.Point(6, 5);
+            this.btnPause.Location = new System.Drawing.Point(39, 320);
             this.btnPause.Name = "btnPause";
             this.btnPause.Size = new System.Drawing.Size(124, 31);
             this.btnPause.TabIndex = 4;
+            this.btnPause.TabStop = false;
             this.btnPause.Text = "Pause";
             this.btnPause.UseVisualStyleBackColor = true;
+            this.btnPause.Click += new System.EventHandler(this.btnPause_Click);
             // 
             // lblScore
             // 
@@ -169,35 +158,11 @@
             this.lblLevel.TabIndex = 0;
             this.lblLevel.Text = "LEVEL 1";
             // 
-            // panelHiScores
-            // 
-            this.panelHiScores.Controls.Add(this.btnHighScores);
-            this.panelHiScores.Location = new System.Drawing.Point(27, 389);
-            this.panelHiScores.Name = "panelHiScores";
-            this.panelHiScores.Size = new System.Drawing.Size(138, 38);
-            this.panelHiScores.TabIndex = 10;
-            // 
-            // panelRestart
-            // 
-            this.panelRestart.Controls.Add(this.btnRestart);
-            this.panelRestart.Location = new System.Drawing.Point(27, 348);
-            this.panelRestart.Name = "panelRestart";
-            this.panelRestart.Size = new System.Drawing.Size(138, 38);
-            this.panelRestart.TabIndex = 11;
-            // 
-            // panelPause
-            // 
-            this.panelPause.Controls.Add(this.btnPause);
-            this.panelPause.Location = new System.Drawing.Point(27, 307);
-            this.panelPause.Name = "panelPause";
-            this.panelPause.Size = new System.Drawing.Size(138, 38);
-            this.panelPause.TabIndex = 12;
-            // 
             // GameArea
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(584, 561);
+            this.ClientSize = new System.Drawing.Size(783, 561);
             this.Controls.Add(this.panelSettings);
             this.Controls.Add(this.lblGameOver);
             this.MaximizeBox = false;
@@ -207,10 +172,6 @@
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Game_KeyDown);
             this.panelSettings.ResumeLayout(false);
             this.panelSettings.PerformLayout();
-            this.panelExit.ResumeLayout(false);
-            this.panelHiScores.ResumeLayout(false);
-            this.panelRestart.ResumeLayout(false);
-            this.panelPause.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -223,15 +184,11 @@
         private System.Windows.Forms.Button btnHighScores;
         private System.Windows.Forms.Button btnExit;
         private System.Windows.Forms.Button btnRestart;
-        private System.Windows.Forms.Button btnPause;
         private System.Windows.Forms.Label lblScore;
         private System.Windows.Forms.Label lblTask;
         private System.Windows.Forms.Label lblLevelTask;
         private System.Windows.Forms.Label lblLevel;
-        private System.Windows.Forms.Panel panelExit;
-        private System.Windows.Forms.Panel panelPause;
-        private System.Windows.Forms.Panel panelRestart;
-        private System.Windows.Forms.Panel panelHiScores;
+        private System.Windows.Forms.Button btnPause;
     }
 }
 

@@ -29,6 +29,7 @@ namespace SnakeGame
             InitializeSettingsArrow();
             InitializeSettingsPanel();
             InitializeButtons();
+            area.Focus();
         }
 
         private void InitializeGame()
@@ -277,34 +278,18 @@ namespace SnakeGame
 
         private void InitializeButtons()
         {
-            btnExit.Enabled = false;
-            btnPause.Enabled = false;
-            btnHighScores.Enabled = false;
-            btnRestart.Enabled = false;
-            //panelExit.MouseEnter += new EventHandler(panelButtons_Enter);
-            //panelExit.MouseLeave += new EventHandler(panelButtons_Leave);
-            //panelPause.MouseEnter += new EventHandler(panelPause_Enter);
-            //panelPause.MouseLeave += new EventHandler(panelPause_Leave);
-            //panel1.MouseEnter += new EventHandler(panelButtons_Enter);
-        }
-
-        private void panelPause_Enter(object sender, EventArgs e)
-        {
-            //btnExit.Enabled = true;
+            btnExit.Enabled = true;
             btnPause.Enabled = true;
-            //btnHighScores.Enabled = true;
-            //btnRestart.Enabled = true;
-        }
+            btnHighScores.Enabled = true;
+            btnRestart.Enabled = true;
 
-        private void panelPause_Leave(object sender, EventArgs e)
-        {
-            //btnExit.Enabled = false;
-            btnPause.Enabled = false;
-            //btnHighScores.Enabled = false;
-            //btnRestart.Enabled = false; 
-        }
+            btnExit.TabStop = false;
+            btnPause.TabStop = false;
+            btnHighScores.TabStop = false;
+            btnRestart.TabStop = false;
+        }      
 
-        /*private void btnPause_Click(object sender, EventArgs e)
+        private void btnPause_Click(object sender, EventArgs e)
         {
             if (pauseStatus == "unPaused")
             {
@@ -315,26 +300,10 @@ namespace SnakeGame
             {
                 mainTimer.Start();
                 pauseStatus = "unPaused";
+                area.Focus();
+                //label1.Focus();
+               // this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Game_KeyDown);
             }
-        }*/
-
-        /*private void btnPause_Click(object sender, EventArgs e)
-        {
-            if (pauseStatus == "unPaused")
-            {
-                mainTimer.Stop();
-                pauseStatus = "Paused";
-            }
-            else if (pauseStatus == "Paused")
-            {
-                mainTimer.Start();
-                pauseStatus = "unPaused";
-            }
-        }*/
-
-        private void button1_Click(object sender, EventArgs e)
-        {
-            this.Close();
-        }
+        }    
     }
 }
