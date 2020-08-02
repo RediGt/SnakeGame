@@ -20,6 +20,7 @@ namespace SnakeGame
         private int score;
         //string arrowStatus;
         int settingsAreaWidth = 260;
+        Panel areaPanel = new Panel();
 
         public GameArea()
         {
@@ -28,19 +29,22 @@ namespace SnakeGame
             InitializeTimer();
             InitializeSettingsArrow();
             InitializeSettingsPanel();
-            InitializeButtons();
-            area.Focus();
+            //InitializeButtons();
+            this.KeyPreview = true;
+            //area.Focus();
         }
 
         private void InitializeGame()
         {
             this.Height = 640;
             this.Width = 860;
+           
+            
             this.Controls.Add(area);
             area.Location = new Point(20, 20);
             area.Height = ClientRectangle.Height - 20 * 2;
             area.Width = ClientRectangle.Width - settingsAreaWidth;  //580
-
+                       
             for (int i = 0; i < 3; i++)
             {
                 this.Controls.Add(food.foodCollection[i]);
@@ -215,10 +219,11 @@ namespace SnakeGame
             lblGameOver.BringToFront();
         }
 
+//SETTING PANEL
         PictureBox arrow = new PictureBox();
         ToolTip arrowHint = new ToolTip();
-        string arrowStatus;
-        string pauseStatus = "unPaused";
+        bool arrowHideSettings = false;
+        bool pauseGame = false;
 
         private void InitializeSettingsPanel()
         {
@@ -240,32 +245,32 @@ namespace SnakeGame
             arrow.MouseEnter += new EventHandler(arrow_Enter);
             arrow.MouseLeave += new EventHandler(arrow_Leave);
 
-            arrowStatus = "unClicked";
+            arrowHideSettings = false;
         }
 
         private void arrow_Click(object sender, EventArgs e)
         {
-            if (arrowStatus == "unClicked")
+            if (arrowHideSettings == false)
             {
                 this.Width = area.Width + Area.CellSize * 3;
-                arrowStatus = "Clicked";
+                arrowHideSettings = true;
                 arrow.Image = Properties.Resources.arrow_right;
             }
-            else if (arrowStatus == "Clicked")
+            else if (arrowHideSettings)
             {
                 this.Width = area.Width + settingsAreaWidth;
                 arrow.Image = Properties.Resources.arrow_left;
-                arrowStatus = "unClicked";
+                arrowHideSettings = false;
             }
         }
 
         private void arrow_Enter(object sender, EventArgs e)
         {
-            if (arrowStatus == "unClicked")
+            if (arrowHideSettings == false)
             {
                 arrowHint.Show("Lock the settings", this, Cursor.Position.X - this.Location.X, Cursor.Position.Y - this.Location.Y);
             }
-            else if (arrowStatus == "Clicked")
+            else if (arrowHideSettings)
             {
                 arrowHint.Show("Unlock the settings", this, Cursor.Position.X - this.Location.X, Cursor.Position.Y - this.Location.Y);
             }
@@ -278,31 +283,30 @@ namespace SnakeGame
 
         private void InitializeButtons()
         {
-            btnExit.Enabled = true;
-            btnPause.Enabled = true;
-            btnHighScores.Enabled = true;
-            btnRestart.Enabled = true;
-
+            //btnExit.Enabled = true;
+            //btnPause.Enabled = true;
+            //btnHighScores.Enabled = true;
+            //btnRestart.Enabled = true;
+/*
             btnExit.TabStop = false;
             btnPause.TabStop = false;
             btnHighScores.TabStop = false;
             btnRestart.TabStop = false;
+            panelSettings.TabStop = false;*/
         }      
 
         private void btnPause_Click(object sender, EventArgs e)
         {
-            if (pauseStatus == "unPaused")
+            if (pauseGame == false)
             {
-                mainTimer.Stop();
-                pauseStatus = "Paused";
+                mainTimer.Stop(); 
+                pauseGame = true;
             }
-            else if (pauseStatus == "Paused")
+            else if (pauseGame)
             {
-                mainTimer.Start();
-                pauseStatus = "unPaused";
                 area.Focus();
-                //label1.Focus();
-               // this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Game_KeyDown);
+                mainTimer.Start();
+                pauseGame = false;
             }
         }    
     }
