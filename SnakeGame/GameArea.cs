@@ -18,7 +18,6 @@ namespace SnakeGame
         Food food = new Food();
         int foodIndex;
         private int score;
-        //string arrowStatus;
         int settingsAreaWidth = 260;
         Panel areaPanel = new Panel();
 
@@ -29,9 +28,7 @@ namespace SnakeGame
             InitializeTimer();
             InitializeSettingsArrow();
             InitializeSettingsPanel();
-            //InitializeButtons();
             this.KeyPreview = true;
-            //area.Focus();
         }
 
         private void InitializeGame()
@@ -280,21 +277,7 @@ namespace SnakeGame
         {
             arrowHint.Hide(arrow);
         }
-
-        private void InitializeButtons()
-        {
-            //btnExit.Enabled = true;
-            //btnPause.Enabled = true;
-            //btnHighScores.Enabled = true;
-            //btnRestart.Enabled = true;
-/*
-            btnExit.TabStop = false;
-            btnPause.TabStop = false;
-            btnHighScores.TabStop = false;
-            btnRestart.TabStop = false;
-            panelSettings.TabStop = false;*/
-        }      
-
+       
         private void btnPause_Click(object sender, EventArgs e)
         {
             if (pauseGame == false)
@@ -308,6 +291,29 @@ namespace SnakeGame
                 mainTimer.Start();
                 pauseGame = false;
             }
-        }    
+        }
+
+        private void btnRestart_Click(object sender, EventArgs e)
+        {
+            mainTimer.Dispose();
+            mainTimer = new Timer();
+            InitializeTimer();
+            
+            snake.DisposeSnake(this);
+            snake = null;
+            snake = new Snake();
+
+            SetFoodLocation();
+            score = 0;
+            lblScore.Text = "Score : " + score;
+
+            snake.Render(this);
+            area.Focus();
+        }
+
+        private void btnExit_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
     }
 }

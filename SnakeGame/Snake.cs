@@ -24,7 +24,7 @@ namespace SnakeGame
         public int VerVelocity { get; set; } = 0;
         public int Step { get; set; } = Area.CellSize;
 
-        private void InitializeSnake()
+        public void InitializeSnake()
         {
             this.AddPixel(initPositionTop, initPositionLeft);
             this.AddPixel(initPositionTop, initPositionLeft + Area.CellSize);
@@ -54,6 +54,14 @@ namespace SnakeGame
             {
                 form.Controls.Add(sp);
                 sp.BringToFront();
+            }
+        }
+
+        public void DisposeSnake(Form form)
+        {
+            foreach (var sp in snakePixels)
+            {
+                form.Controls.Remove(sp);
             }
         }
 
