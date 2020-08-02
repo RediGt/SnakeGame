@@ -8,24 +8,41 @@ using System.Windows.Forms;
 
 namespace SnakeGame
 {
-    class Food : PictureBox
+    class Food
     {
         Random rand = new Random();
+        public List<PictureBox> foodCollection = new List<PictureBox>();
         public Food()
         {
             InitializeFood();           
         }
-
+      
         private void InitializeFood()
+        {           
+            for (int i = 0; i < 3; i++)
+            {
+                PictureBox food = new PictureBox();
+                food.Height = Area.CellSize;
+                food.Width = Area.CellSize;
+                food.BackColor = Color.RosyBrown;
+                food.SizeMode = PictureBoxSizeMode.StretchImage;
+
+                foodCollection.Add(food);
+            }
+
+            foodCollection[0].Image = Properties.Resources.Apple;
+            foodCollection[1].Image = Properties.Resources.Pear;
+            foodCollection[2].Image = Properties.Resources.Grape;           
+        }     
+
+        public void GetFoodLocation(int foodIndex)
         {
-            this.Width = 20;
-            this.Height = 20;
-            this.BackColor = Color.Blue;
-        }
-        public void GetFoodLocation()
-        {
-            this.Location = new Point(20 + 20 * rand.Next(0, 29), 20 + 20 * rand.Next(0, 29));
+            foodCollection[foodIndex].Location = new Point(20 + 20 * rand.Next(1, 28), 20 + 20 * rand.Next(1, 28));
         }
 
+        public int FoodIndex()
+        {
+            return rand.Next(0, 3);
+        }
     }
 }
